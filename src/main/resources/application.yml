@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/timestampdb
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        ddl-auto: none
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase/db.changelog-master.xml
