@@ -17,8 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TimestampService {
 
-    final TimestampRepository timestampRepository;
-    final TimestampMapper timestampMapper;
+    private final TimestampRepository timestampRepository;
+    private final InMemoryBufferService inMemoryBufferService;
+    private final TimestampMapper timestampMapper;
 
     public List<TimestampDto> findAll() {
         var result = timestampRepository.findAll();
@@ -26,11 +27,11 @@ public class TimestampService {
         return timestampMapper.toTimestampDtoList(result);
     }
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 1_000)
     public void saveTimestamp() {
-        timestampRepository.save(TimestampEntity.builder()
+        inMemoryBufferService.writeToBuffer(TimestampEntity.builder()
                 .timestamp(OffsetDateTime.now())
                 .build());
-        log.info("Current timestamp was successfully saved");
+        log.debug("Current timestamp was successfully saved to buffer");
     }
 }

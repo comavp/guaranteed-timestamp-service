@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/timestamps")
 public class MainController {
 
-    final TimestampService timestampService;
+    private final TimestampService timestampService;
 
     @GetMapping
     public ResponseEntity<List<TimestampDto>> findAll() {
